@@ -1,0 +1,65 @@
+package com.cn.commons.utils;
+
+import com.cn.model.vo.PdfDomainVO;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.util.PDFTextStripper;
+
+import java.io.File;
+
+/**
+ * @author SaddyFire
+ * @date 2022/3/8
+ * @TIME:11:37
+ */
+public class PdfTest {
+
+    /**
+     * 读取pdf中文字信息(全部)
+     */
+    public static void READPDF(String inputFile){
+        //创建文档对象
+        PDDocument doc = null;
+        String content="";
+        try {
+            //加载一个pdf对象
+            doc = PDDocument.load(new File(inputFile));
+            //获取一个PDFTextStripper文本剥离对象
+            PDFTextStripper textStripper =new PDFTextStripper("GBK");
+            content=textStripper.getText(doc);
+            System.out.println("内容:"+content);
+            System.out.println("全部页数"+doc.getNumberOfPages());
+            //关闭文档
+            doc.close();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+
+    /**
+     * 读取pdf中文字信息(指定从第几页开始)
+     */
+    public static PdfDomainVO readPageNO(PdfDomainVO vo){
+        String content="";
+        try{
+            PDDocument document = PDDocument.load(vo.getInputfile());
+            // 获取页码
+            int pages = document.getNumberOfPages();
+            // 读文本内容
+            PDFTextStripper stripper=new PDFTextStripper();
+            // 设置按顺序输出
+            stripper.setSortByPosition(true);
+            stripper.setStartPage(vo.getPageno());
+            stripper.setEndPage(vo.getPageno());
+            //获取内容
+            content = stripper.getText(document);
+            vo.setContent(content);
+            System.out.println("function : readPageNO over");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return vo;
+    }
+
+
+
+}

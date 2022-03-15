@@ -1,0 +1,30 @@
+#服务端口
+server:
+  port: 18081
+spring:
+  application:
+    name: nc-resume
+  cloud:  #nacos配置
+    nacos:
+      discovery:
+        server-addr: 192.168.78.1:8848
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/nc_management?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useSSL=false
+    username: root
+    password: 123456
+mybatis-plus:
+  global-config:
+    db-config:
+      table-prefix: nc_   # 表名前缀
+#dubbo:    #dubbo配置
+#  registry:
+#    address: spring-cloud://192.168.78.1:8848
+#  consumer:
+#    check: false
+#  cloud:
+#    subscribed-services: nc-dubbo-db
